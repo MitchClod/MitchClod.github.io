@@ -3,10 +3,338 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mitch Clodfelter</title>
+  <title>Clodfelter — Life & Labor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a;
+      --off-black: #111111;
+      --dark-grey: #1a1a1a;
+      --mid-grey: #333333;
+      --light-grey: #888888;
+      --off-white: #e8e4dc;
+      --cream: #f2ede4;
+      --accent: #c8a96e;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--off-white);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 3rem;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--off-white);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--off-white);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-image {
+      position: absolute;
+      inset: 0;
+      background: url('images/hero.jpeg') center center / cover no-repeat;
+      filter: brightness(0.55);
+      transform: scale(1.03);
+      animation: subtle-zoom 20s ease-out forwards;
+    }
+    @keyframes subtle-zoom {
+      from { transform: scale(1.03); }
+      to { transform: scale(1.0); }
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.3) 50%, transparent 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 3rem 5rem;
+      max-width: 900px;
+      animation: fade-up 1.2s ease forwards;
+      opacity: 0;
+      animation-delay: 0.3s;
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: 1.0;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+    .hero-subtitle {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+    .hero-scroll {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--light-grey);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero-scroll:hover { color: var(--off-white); }
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: currentColor;
+    }
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    .about-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-top: 1px solid var(--mid-grey);
+    }
+    .about-image-wrap { position: relative; }
+    .about-image-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+    .about-image-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      right: -12px;
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--accent);
+      z-index: -1;
+    }
+    .about-text h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--cream);
+    }
+    .about-text p { color: var(--light-grey); font-size: 0.95rem; margin-bottom: 2rem; }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn:hover { background: var(--accent); color: var(--black); }
+    .photo-grid { background: var(--off-black); border-top: 1px solid var(--mid-grey); }
+    .photo-grid-inner { max-width: 1100px; margin: 0 auto; }
+    .grid-images {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 6px;
+      margin-top: 2rem;
+    }
+    .grid-images img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+      transition: filter 0.3s;
+    }
+    .grid-images img:hover { filter: brightness(1); }
+    .grid-images img:first-child { grid-row: span 2; height: 566px; }
+    .links-section { border-top: 1px solid var(--mid-grey); max-width: 1100px; margin: 0 auto; }
+    .links-section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--cream);
+      margin-bottom: 3rem;
+    }
+    .links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .link-card {
+      display: block;
+      padding: 2.5rem 2rem;
+      background: var(--dark-grey);
+      text-decoration: none;
+      transition: background 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+    .link-card:hover { background: var(--mid-grey); border-bottom-color: var(--accent); }
+    .link-card-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .link-card h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.4rem; color: var(--cream); margin-bottom: 0.5rem; }
+    .link-card p { font-size: 0.85rem; color: var(--light-grey); }
+    footer {
+      border-top: 1px solid var(--mid-grey);
+      padding: 2.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p { font-size: 0.75rem; color: var(--light-grey); letter-spacing: 0.1em; }
+    .footer-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 1rem; letter-spacing: 0.15em; color: var(--off-white); }
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero-content { padding: 0 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-strip { grid-template-columns: 1fr; gap: 3rem; }
+      .grid-images { grid-template-columns: 1fr 1fr; }
+      .grid-images img:first-child { grid-row: span 1; height: 280px; grid-column: span 2; }
+      .links-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Mitch Clodfelter</h1>
-  <p>Welcome to my site.</p>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Clodfelter</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="cattle.html">Cattle</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-image"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Clodfelter</p>
+      <h1 class="hero-title">Life &amp;</h1>
+      <p class="hero-subtitle">Labor.</p>
+      <a href="#about" class="hero-scroll">Scroll down</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-strip">
+      <div class="about-image-wrap">
+        <img src="images/mitch.jpeg" alt="Mitch Clodfelter">
+      </div>
+      <div class="about-text">
+        <p class="section-label">About</p>
+        <h2>Farmer.<br>Writer.<br>Clodfelter.</h2>
+        <p>Life on the land and the stories that come with it. Cattle, crops, and everything in between.</p>
+        <a href="about.html" class="btn">Read More</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="photo-grid">
+    <div class="photo-grid-inner">
+      <p class="section-label">From the Farm</p>
+      <div class="grid-images">
+        <img src="images/cattle.jpeg" alt="Cattle grazing">
+        <img src="images/field.jpeg" alt="Walking the field">
+        <img src="images/dog.jpeg" alt="Farm dog">
+        <img src="images/family.jpeg" alt="Family">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="links-section">
+      <h2>More from Mitch</h2>
+      <div class="links-grid">
+        <a href="blog.html" class="link-card">
+          <p class="link-card-label">Writing</p>
+          <h3>Blog</h3>
+          <p>Thoughts on farming, life, and what it all means.</p>
+        </a>
+        <a href="cattle.html" class="link-card">
+          <p class="link-card-label">The Herd</p>
+          <h3>Cattle</h3>
+          <p>Show cattle, the operation, and what we're raising.</p>
+        </a>
+        <a href="https://substack.com/@mitchclod" target="_blank" class="link-card">
+          <p class="link-card-label">Newsletter</p>
+          <h3>Substack</h3>
+          <p>Subscribe for longer reads delivered to your inbox.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Clodfelter</span>
+    <p>Life & Labor &mdash; cldfltr.com</p>
+  </footer>
+
 </body>
 </html>
